@@ -1,0 +1,17 @@
+@url = jumpscale.email.header
+key = (S)
+value = (S)
+
+@url = jumpscale.email.attachement
+name = (S)
+content = (bin)
+
+
+@url = jumpscale.email.message
+from = "" (S)
+to = "" (S)
+subject = "" (S)
+headers = (LO)!jumpscale.email.header
+attachments = (LO)!jumpscale.email.attachement
+body = (S)
+htmlbody = (S)
