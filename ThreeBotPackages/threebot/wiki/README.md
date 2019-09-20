@@ -1,4 +1,9 @@
-# ff content
+# wikis
+
+aggregator of wikis
+can deploy a wiki
+expose a wiki
+aggregated search
 
 ## questions
 
@@ -34,10 +39,24 @@ The structure of data during those client /server exchanges are called models an
 to sum up an external client would call this threebot actors method through redis protocol exchanging data according to the models.
 ![3Bot module example with mail module](../doc/images/3bot_actors_models.jpg)
 
-## RUN
+to load wikis or werbsites , use this package
 
-to start the threebot server manually
+### Install
 
-```bash
-kosmos -p 'j.servers.threebot.default.start(background=False,web=False)'
+`j.threebot.package.wikis.install()`
+
+### Run
+
+`j.threebot.package.wikis.start()`
+
+### Screenshot
+
+<img src="https://i.ibb.co/K5WGBfz/Screenshot-from-2019-09-05-19-31-39.png" alt="Screenshot-from-2019-09-05-19-31-39" border="0">
+
+Open browser on port `80`
+
+### Test
+
+```
+j.threebot.package.wikis.test()
 ```

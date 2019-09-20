@@ -9,6 +9,7 @@ This module will allow :
 
 ## Technical Requirements
 
+Serve a static html browser
 We will rely upon the jimber tech
 What kind of info do we need on a ff browser ?.
 
