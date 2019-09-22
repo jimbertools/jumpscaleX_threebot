@@ -5,13 +5,15 @@ value = (S)
 @url = jumpscale.email.attachement
 name = (S)
 content = (bin)
+contenttype = (S)
 
 
 @url = jumpscale.email.message
-from = "" (S)
-to = "" (S)
+name** = ""
+from_email = "" (S)
+to_email = "" (S)
 subject = "" (S)
 headers = (LO)!jumpscale.email.header
 attachments = (LO)!jumpscale.email.attachement
-body = (S)
-htmlbody = (S)
+body = "" (S)
+htmlbody = "" (S)
