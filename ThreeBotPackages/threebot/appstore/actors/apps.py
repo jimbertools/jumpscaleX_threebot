@@ -6,21 +6,32 @@ class apps(j.baseclasses.threebot_actor):
         bcdb = j.data.bcdb.get("appstore")
         self.model = bcdb.model_get(url="appstore.app")
 
-    def add(self, appname="", installed=True, schema_out=None, user_session=None):
-        # default doesn't work
+    def _validate_app(self, app):
+        for field in ["appname","description", "image"]:
+            if not getattr(app, field):
+                raise j.exceptions.Value("%s is required" % field)
+
+    def _get_app(self, app_id):
+        try:
+            return self.model.get(app_id)
+        except j.exceptions.NotFound:
+            raise j.exceptions.NotFound("App %s not found" % app_id)
+
+    def put(self, app, schema_out=None, user_session=None):
         """
         ```in
-        appname = (S)
-        installed = (B)
+        app = (O) !appstore.app
         ```
-        """
-        # import ipdb; ipdb.set_trace()
-        app = self.model.new()
-        app.appname = appname
-        app.installed = installed
-        app.save()
-        response = {"result": True, "error_code": "", "error_message": ""}
-        return j.data.serializers.json.dumps(response)
+        """ 
+
+        self._validate_app(app)
+
+        if getattr(app, "id"):
+            self._get_app(app.id)
+            self.model.set_dynamic(app._ddict, obj_id=app.id)
+        else:
+            app = self.model.new(app)
+            app.save()
 
     def get(self, schema_out=None, user_session=None):
         """
@@ -33,20 +44,3 @@ class apps(j.baseclasses.threebot_actor):
         for app in self.model.iterate():
             out.apps.append(app)
         return out
-
-    def update(self, appname="", installed=True, schema_out=None, user_session=None):
-        """
-        ```in
-        appname = (S)
-        installed = (B)
-        ```
-        """
-        app = self.model.find()
-
-        for application in app:
-            if application.appname == appname:
-                application.installed = installed
-                application.save()
-
-        response = {"result": True, "error_code": "", "error_message": ""}
-        return j.data.serializers.json.dumps(response)
