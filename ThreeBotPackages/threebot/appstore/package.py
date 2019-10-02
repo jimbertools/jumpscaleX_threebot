@@ -20,10 +20,21 @@ class Package(j.baseclasses.threebot_package):
                     {"appname" : "Browser", "installed" : False, "description" : "Private browsing without limits.", "image" : "upcoming"},
                     {"appname" : "FF Connect", "installed" : False, "description" : "Peer to peer and group video conferencing, straight from the browser.", "image" : "upcoming"}]
 
+        appsInDb = appModel.iterate()
+
         for application in appsList:
-            #rework needed
-            app = appModel.new(application)
-            app.save()
+            found = False
+            for installedApp in appsInDb:
+                print("application " + application['appname'])
+                print("installedap " + installedApp.appname)
+                if application['appname'] == installedApp.appname:
+                    found = True
+                    break
+            if not found:
+                application = appModel.new(application)
+                application.save()
+                
+                
         
     def start(self):
         self.bcdb.models_add(path=self.package_root + '/models')
