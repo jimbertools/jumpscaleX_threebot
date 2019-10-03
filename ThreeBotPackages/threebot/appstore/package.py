@@ -25,8 +25,6 @@ class Package(j.baseclasses.threebot_package):
         for application in appsList:
             found = False
             for installedApp in appsInDb:
-                print("application " + application['appname'])
-                print("installedap " + installedApp.appname)
                 if application['appname'] == installedApp.appname:
                     found = True
                     break
