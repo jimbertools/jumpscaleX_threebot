@@ -14,5 +14,6 @@ if (process.env.NODE_ENV === 'production') {
 
 export default ({
   ...config,
-  salutations: ['Mr', 'Miss', 'Mme']
+  salutations: ['Mr', 'Miss', 'Mme'],
+  description: ['Work', 'Home', 'Mobile']
 })

@@ -3,6 +3,6 @@ export default ({
   jsApiUrl: `${window.location}actors/`,
 
   apiUrl: `https://ffc-signaling.staging.jimber.org`,
-  janus: 'https://ffc-video.staging.jimber.org/janus',
-  janusHTTPS: 'https://ffc-video.staging.jimber.org/janus'
+  janus: 'https://ffc-video.staging.jimber.org:8089/janus',
+  janusHTTPS: 'https://ffc-video.staging.jimber.org:8089/janus'
 })
