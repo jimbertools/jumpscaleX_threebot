@@ -22,7 +22,6 @@ async function callActorWithArgs(actorCmd, actorArgs) {
 
 }
 
-
 export function getMetadata(blogName) {
     if (process.env.DEV !== "1") {
         if (blogName !== "undefined") {
@@ -102,5 +101,70 @@ export function getPages(blogName) {
 }
 
 export function search(blogName, query) {
+
+    if (!blogName) {
+        blogName = ""
+    }
+    console.log(`search ${blogName} ${query}`)
+    if (process.env.DEV !== "1") {
+        return callActorWithArgs("search", {
+            blog_name: blogName,
+            query: query
+        })
+    } else {
+        return searchLocal(blogName, query)
+    }
+}
+
+
+async function searchLocal(blogName, query) {
+    console.log(pages.length)
+    console.log(posts.length)
+
+    let theposts = []
+    let thepages = []
+    let blogs = [];
+    if (!blogName) {
+        blogs = await getBlogs();
+    } else {
+        blogs.push(blogName)
+    }
+    for (let blog of blogs) {
+        // console.log(`posts of ${blog}`, await getPosts(blog))
+        theposts = [...theposts, ...(await getPosts(blog))];
+        thepages = [...thepages, ...(await getPages(blog))];
+    }
+
+    console.log(theposts.length)
+    console.log(thepages.length)
+
+    let results = []
+    for (let blog of blogs) {
+
+        for (let post of theposts) {
+            if (post.content_with_meta.includes(query)) {
+                let temp = { "type": "posts", "slug": post.slug, "blog": blog }
+                if (!results.includes(temp)) {
+                    results.push(temp)
+                }
+            }
+        }
+
+
+        for (let page of thepages) {
+            if (page.content_with_meta.includes(query)) {
+                let temp = { "type": "pages", "slug": page.slug, "blog": blog }
+
+                if (!results.includes(temp)) {
+                    results.push(temp)
+                }
+            }
+        }
+    }
+
+
+
+    console.log("results: ", results)
+    return new Promise((resolve, reject) => resolve(results));
 
 }

@@ -7,6 +7,11 @@
   let converter = new showdown.Converter({ metadata: true });
   converter.setFlavor("github");
   let mdtext = converter.makeHtml(post.content);
+  let excerpt = mdtext
+    .split("\n")
+    .splice(1)
+    .join("\n")
+    .slice(0, 300);
   //   import { fly } from "svelte/transition";
 </script>
 
@@ -14,8 +19,15 @@
  -->
 <div class="post-card-title">
 
-  <a rel="prefetch" href="blog/{username}/posts/{post.slug}">{post.title}</a>
+  <a rel="prefetch" href="blog/{username}/posts/{post.slug}">
+    <h1>{post.title}</h1>
+  </a>
 </div>
-<!-- <div class="post-card-content">
-    {@html mdtext.slice(0, 500)}
-  </div> -->
+<div class="post-card-content">
+  {@html excerpt}
+
+  <a rel="prefetch" href="blog/{username}/posts/{post.slug}">
+
+    <h5 class="continue-reading">...continue reading</h5>
+  </a>
+</div>

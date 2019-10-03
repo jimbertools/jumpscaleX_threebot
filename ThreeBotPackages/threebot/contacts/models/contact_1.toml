@@ -10,6 +10,8 @@ birthdate= ""
 website=""
 job_title=""
 salutation = "Mr,Miss,Mme"
+favorite=(B)
+tags= (LS)
 
 
 @url = contact.phone.1

@@ -1,28 +1,32 @@
 <script>
   import axios from "axios";
-  import blogName from "./Header.svelte";
-  axios.defaults.headers.post["Content-Type"] = "application/json";
+  axios.defaults.headers.get["Content-Type"] = "application/json";
 
+  import { stores } from "@sapper/app";
+  const { preloading, page, session } = stores();
+  export let blogName = $page.params.theuser;
   let query = "";
   let search_res = "";
-  const BLOG_API = "/actors/blog";
-  function search(e) {
+
+  const BLOG_API = `blog/search.json`;
+
+  export async function search_method(e) {
     if (!query) {
       alert("empty search !");
     }
     e.preventDefault();
-    res = axios.post(`${BLOG_API}/search`, {
-      args: {
-        blog: blogName,
+    search_res = await axios.get(BLOG_API, {
+      params: {
+        blog_name: blogName,
         query: query
       }
     });
-    return search_res;
+    search_res = search_res.data;
   }
 </script>
 
 <div class="col-sm-3 col-md-3 pull-right">
-  <form class="navbar-form form-inline" role="search" on:submit={search}>
+  <form class="navbar-form form-inline" role="search" on:submit={search_method}>
     <!-- <i class="fas fa-search" aria-hidden="true" /> -->
     <input
       class="form-control"
@@ -35,11 +39,13 @@
 </div>
 
 {#if search_res}
+  <p>Search Result</p>
   <ul>
     {#each search_res as res}
       <li>
-        <p>Search Result</p>
-        <a href="blog/{res.slug}">Type: {res.type}</a>
+        <a href="blog/{res.blog}/{res.type}/{res.slug}">
+          {res.slug} - Type: {res.type}
+        </a>
       </li>
     {/each}
   </ul>

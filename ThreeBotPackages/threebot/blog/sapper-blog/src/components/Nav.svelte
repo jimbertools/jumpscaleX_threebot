@@ -70,7 +70,7 @@
             <a
               rel="prefetch"
               class={segment === undefined ? 'selected' : ''}
-              href="blog">
+              href="blog/">
               /
             </a>
           </li>

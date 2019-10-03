@@ -15,7 +15,7 @@ class FFMainApp(j.baseclasses.object, j.baseclasses.testtools):
         
         locations = website.locations.get("locations")
 
-        for pkg in ["ffbrowser", "interface", "contacts"]:
+        for pkg in ["ffbrowser", "interface", "contacts","appstore"]:
             print("DIIR PATH: ", self._dirpath)
             package = j.tools.threebot_packages.get(pkg, path=os.path.join(os.path.dirname(self._dirpath), pkg), threebot_server_name=server.name)
             package.prepare()

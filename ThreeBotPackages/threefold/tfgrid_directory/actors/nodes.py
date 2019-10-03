@@ -36,8 +36,7 @@ class nodes(j.baseclasses.threebot_actor):
         if not node.location:
             validation_errors.append("location")
         if validation_errors:
-            raise Exception("Can not create node without {}".format(
-                " or ".join(validation_errors)))
+            raise Exception("Can not create node without {}".format(" or ".join(validation_errors)))
         old_node = self._find(node.node_id)
         if old_node:
             return self.node_model.set_dynamic(node._ddict, obj_id=old_node.id)

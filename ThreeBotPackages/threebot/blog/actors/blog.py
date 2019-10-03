@@ -12,6 +12,13 @@ class blog(j.baseclasses.threebot_actor):
                 blogs.append(blog.name)
         return j.data.serializers.json.dumps(blogs)
 
+    def _list_blogs(self, user_session=None):
+        blogs = []
+        for blog in self.blog_model.find():
+            if blog.name:
+                blogs.append(blog.name)
+        return blogs
+
     def get_metadata(self, blog_name, user_session=None):
         """
         ```in
@@ -129,21 +136,28 @@ class blog(j.baseclasses.threebot_actor):
             query = (S)
         ```
         """
-        # takes a slice of a content of a post / page and returns the post's / page's slug
-        posts = self._list_posts(blog_name)
-        pages = self._list_pages(blog_name)
-        results = []
-        for post in posts:
-            if query in post.content_with_meta:
-                temp = {"type": "post", "slug": post.slug}
-                if not temp in results:
-                    results.append(temp)
 
-        for page in pages:
-            if query in page.content_with_meta:
-                temp = {"type": "page", "slug": page.slug}
-                if not temp in results:
-                    results.append(temp)
+        blogs = []
+        if not blog_name:
+            blogs = self._list_blogs()
+        else:
+            blogs = [blog_name]
+
+        results = []
+
+        for blog_name in blogs:
+
+            for post in self._list_posts(blog_name):
+                if query in post.content_with_meta:
+                    temp = {"type": "posts", "slug": post.slug, "blog": blog}
+                    if temp not in results:
+                        results.append(temp)
+
+            for page in self._list_pages(blog_name):
+                if query in page.content_with_meta:
+                    temp = {"type": "pages", "slug": page.slug, "blog": blog}
+                    if temp not in results:
+                        results.append(temp)
 
         if results:
             return j.data.serializers.json.dumps(results)

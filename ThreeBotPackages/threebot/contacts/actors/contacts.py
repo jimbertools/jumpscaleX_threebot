@@ -17,48 +17,28 @@ class contacts(j.baseclasses.threebot_actor):
             if not getattr(contact, field):
                 raise j.exceptions.Value("%s is required" % field)
 
-    def register(self, contact, schema_out=None, user_session=None):
+    def put(self, contact, schema_out=None, user_session=None):
         """
         ```in
         contact = (O) !contact.1
         ```
 
         ```out
-        contact_id = (I)
+        contact  = (O) !contact.1
         ```
         """
-
         self._validate_contact(contact)
-        
-        # if self.contact_model.find(name=contact.firstname):
-        #     raise j.exceptions.Value("Contact with name %s already exist" % contact.name)
 
-        contact = self.contact_model.new(contact)
-        contact.save()
-        contact.id
-
+        if getattr(contact,"id"):
+            self._get_contact(contact.id)
+            self.contact_model.set_dynamic(contact._ddict, obj_id=contact.id)
+        else:
+            contact = self.contact_model.new(contact)
+            contact.save()
         
+
         res = schema_out.new()
-        res.contact_id = contact.id
-        return res
-
-    def update(self, contact_id, contact, schema_out=None, user_session=None):
-        """
-        ```in
-        contact_id = (I)
-        contact = (O) !contact.1
-        ```
-
-        ```out
-        success = (B)
-        ``` 
-        """
-        self._get_contact(contact_id)
-        self._validate_contact(contact)
-        self.contact_model.set_dynamic(contact._ddict, obj_id=contact_id)
-        
-        res = schema_out.new()
-        res.success = True
+        res.contact = contact
         return res
 
     def get(self, contact_id, schema_out=None, user_session=None):
@@ -94,3 +74,33 @@ class contacts(j.baseclasses.threebot_actor):
                 continue
             out.contacts.append(contact)
         return out
+        
+    def remove(self, contact_id, schema_out=None, user_session=None):
+        """
+        ```in
+        contact_id = (I)
+        ```
+
+        ```out
+        success = (B)
+        ``` 
+        """
+        contact = self._get_contact(contact_id)
+        contact.delete()
+
+        out = schema_out.new()
+        out.success = True
+        return out
+
+    # share or send ?
+    def share(self, contact, schema_out=None, user_session=None):
+        pass
+
+    def list_by_name(self, name, schema_out=None, user_session=None):
+        pass
+
+    def search_by_name(self, name, schema_out=None, user_session=None):
+        pass
+
+    def search(self, text, schema_out=None, user_session=None):
+        pass
