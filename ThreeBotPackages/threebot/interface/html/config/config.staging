@@ -2,7 +2,7 @@ export default ({
   tfApiUrl: 'https://radar.threefold.io/api/',
   jsApiUrl: `${window.location}actors/`,
 
-  apiUrl: `https://${window.location.host}/freeflowconnect-signaling`,
+  apiUrl: `https://ffc-signaling.staging.jimber.org`,
   janus: 'https://ffc-video.staging.jimber.org/janus',
   janusHTTPS: 'https://ffc-video.staging.jimber.org/janus'
 })
