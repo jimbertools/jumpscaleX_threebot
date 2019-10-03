@@ -23,7 +23,7 @@
 </svelte:head>
 
 {#await posts}
-  loading
+  Loading
 {:then value}
   <PostList title="Posts with tag {tag}" posts={value} />
 {/await}

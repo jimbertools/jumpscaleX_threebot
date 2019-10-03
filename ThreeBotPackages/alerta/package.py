@@ -26,37 +26,24 @@ class Package(j.baseclasses.threebot_package):
         server = self.openresty
         server.install(reset=False)
         server.configure()
-        website = server.websites.get("alerta")
+
+        website = server.get_from_port(80)
         website.ssl = False
-        website.port = 8081
-        locations = website.locations.get("alerta")
+        locations = website.locations.get("alerta_locations")
 
-        # website_location = locations.locations_static.new()
-        # website_location.name = "alerta"
-        # website_location.path_url = "/"
-        # website_location.use_jumpscale_weblibs = True
-        # # import pdb; pdb.set_trace()
-        # fullpath = j.sal.fs.joinPaths(self.package_root, "html/")
-        # print(fullpath)
-        # print(fullpath)
-        # website_location.path_location = fullpath
-
-        sapper_proxy_location = locations.locations_proxy.new()
-        sapper_proxy_location.name = "alerta_sapper"
-        sapper_proxy_location.path_url = f"/"
-        sapper_proxy_location.ipaddr_dest = "0.0.0.0"
-        sapper_proxy_location.port_dest = 3000
-        sapper_proxy_location.scheme = "http"
-        # import pdb; pdb.set_trace()
+        website_location = locations.locations_static.new()
+        website_location.name = "alerta"
+        website_location.path_url = "/"
+        website_location.use_jumpscale_weblibs = False
+        fullpath = j.sal.fs.joinPaths(self.package_root, "html/")
+        website_location.path_location = fullpath
 
         ## START BOTTLE ACTORS ENDPOINT
-
-        rack = j.servers.rack.get()
         # get gedis http server
         app = j.servers.gedishttp.get_app()
-
+        
         # add gedis http server to the rack
-        rack.bottle_server_add(name="gedishttp", port=9201, app=app)
+        self.rack_server.bottle_server_add(name="gedishttp", port=9201, app=app)
 
         # create location `/actors` to on your website `8084` to forward
         # requests to `9201` where the bottle server is running

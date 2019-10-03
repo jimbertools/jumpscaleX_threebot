@@ -3,8 +3,8 @@ from Jumpscale import j
 
 class contacts(j.baseclasses.threebot_actor):
     def _init(self, *args, **kwargs):
-        bcdb = j.data.bcdb.get('contacts')
-        self.contact_model = bcdb.model_get(url='contact.1')
+        bcdb = j.data.bcdb.get("contacts")
+        self.contact_model = bcdb.model_get(url="contact.1")
 
     def _get_contact(self, contact_id):
         try:
@@ -13,7 +13,7 @@ class contacts(j.baseclasses.threebot_actor):
             raise j.exceptions.NotFound("Contact %s not found" % contact_id)
 
     def _validate_contact(self, contact):
-        for field in ["firstname","lastname"]:
+        for field in ["firstname", "lastname"]:
             if not getattr(contact, field):
                 raise j.exceptions.Value("%s is required" % field)
 
@@ -52,7 +52,6 @@ class contacts(j.baseclasses.threebot_actor):
         ```
         """
         return self._get_contact(contact_id)
-
 
     def list(self, firstname, lastname, schema_out=None, user_session=None):
         """

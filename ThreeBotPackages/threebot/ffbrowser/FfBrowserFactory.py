@@ -17,6 +17,5 @@ class InterfaceFactory(j.baseclasses.object, j.baseclasses.testtools):
     def start(self):
         self.install()
 
-
     def test(self, name=""):
         pass

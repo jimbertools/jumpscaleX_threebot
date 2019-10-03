@@ -2,8 +2,9 @@ from Jumpscale import j
 
 
 class Package(j.baseclasses.threebot_package):
-    def _init(self, **kwargs):
-        self.bcdb = self._package.threebot_server.bcdb_get("threebot_phonebook")
+    @property
+    def bcdb(self):
+        return self._package.threebot_server.bcdb_get("threebot_phonebook")
 
     def prepare(self):
         """
@@ -17,9 +18,8 @@ class Package(j.baseclasses.threebot_package):
         called when the 3bot starts
         :return:
         """
-
-        self.bcdb.models_add(path=self.package_root + "/models")
-        self.gedis_server.actors_add(self.package_root + "/actors", namespace="default")
+        # std will load the actors & models & the wiki's, no need to specify
+        pass
 
     def stop(self):
         """

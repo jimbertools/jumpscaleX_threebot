@@ -3,6 +3,7 @@ mermaid.initialize({ startOnLoad: false });
 
 function docsifyConfig(name, repo) {
     basePath = location.protocol + "//" + location.hostname + ":4442/docsites/" + name;
+    imagesPath = location.protocol + "//" + location.hostname + ":4442";
     TeamWidget.avatarPrefix = basePath;
 
     window.$docsify = {
@@ -24,7 +25,24 @@ function docsifyConfig(name, repo) {
                         return (`<div class="reveal"><div class="slides" style="position: initial;">${code}</div></div>`);
                     }
                     if (lang === "slideshow") {
-                        return (`<div class="reveal"><div class="slides" style="position: initial;">${code}</div></div>`);
+
+                        String.prototype.replaceAll = function (stringToFind, stringToReplace) {
+                            if (stringToFind === stringToReplace) return this;
+                            var temp = this;
+                            var index = temp.indexOf(stringToFind);
+                            while (index != -1) {
+                                temp = temp.replace(stringToFind, stringToReplace);
+                                index = temp.indexOf(stringToFind);
+                            }
+                            return temp;
+                        };
+
+                        let rendered_code = function (code) {
+                            code = code.replaceAll("$path", imagesPath);
+                            return code;
+                        }
+
+                        return (`<div class="reveal"><div class="slides" style="position: initial;">${rendered_code(code)}</div></div>`);
                     }
                     if (lang === "gallery") {
                         return (`<div class="gallery" style="position: initial;">${code}</div>`);
@@ -32,6 +50,9 @@ function docsifyConfig(name, repo) {
                     if (lang === "team") {
                         var data = JSON.parse(code);
                         return TeamWidget.render(data.dataset, data.order);
+                    }
+                    if (lang === "markdown") {
+                        return (`<div class="reveal"><div class="slides" style="position: initial;">${code}</div></div>`);
                     }
                     return this.origin.code.apply(this, arguments);
                 }

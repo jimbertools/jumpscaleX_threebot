@@ -7,8 +7,8 @@
 </script>
 
 <div class="container header">
-  <div class="blog-name" />
-  <div class="blog-description" />
-  <div class="blog-logo" />
+  <!-- <div class="blog-name">{blogName}</div>
+  <div class="blog-description">{blogDescription}</div>
+  <div class="blog-logo" /> -->
 
 </div>

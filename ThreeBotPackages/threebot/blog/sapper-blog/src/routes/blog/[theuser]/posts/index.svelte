@@ -51,7 +51,7 @@
 </svelte:head>
 
 {#await posts then value}
-  <PostList title="Recent posts" posts={value} {username} />
+  <PostList posts={value} {username} />
   <ListPagination
     articlesCount={totalPostsLength}
     articlesPerPage={metadata.posts_per_page}

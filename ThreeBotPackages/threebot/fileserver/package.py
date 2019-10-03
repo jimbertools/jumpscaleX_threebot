@@ -41,6 +41,13 @@ class Package(j.baseclasses.threebot_package):
         website_location.path_location = f"{self._dirpath}/filemanager_UI/static"
         # website_location.use_jumpscale_weblibs = True
 
+        proxy_location = locations.locations_proxy.new()
+        proxy_location.name = "onlyoffice"
+        proxy_location.path_url = "/onlyoffice/"
+        proxy_location.ipaddr_dest = "172.19.0.4"
+        proxy_location.port_dest = 80
+        proxy_location.scheme = "http"
+
         locations.configure()
         website.configure()
 
