@@ -11,7 +11,7 @@ blog_title** = "JSX blog" (S)
 blog_description = "JSX blog description" (S)
 author_name = "" (S)
 author_email = "" (S)
-author_image_filename = ""
+author_image = ""
 base_url = "" (S)
 url = "" (S)
 posts_dir = "posts"
@@ -29,6 +29,10 @@ content = "" (S)
 content_with_meta = "" (S)
 tags = (LS)
 published_at = "" (S)
+author_name = "" (S)
+author_email = "" (S)
+author_image = "" (S)
+
 
 
 @url = jumpscale.blog

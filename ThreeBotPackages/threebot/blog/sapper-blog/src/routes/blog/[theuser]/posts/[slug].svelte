@@ -18,16 +18,10 @@
 <script>
   export let post;
   import { stores } from "@sapper/app";
+  import Post from "../../../../components/Post.svelte"
   const { preloading, page, session } = stores();
   export let username = $page.params.theuser;
 
-  import showdown from "showdown";
-
-  let converter = new showdown.Converter({
-    metadata: true
-  });
-  converter.setFlavor("github");
-  $: mdtext = converter.makeHtml(post.content);
 </script>
 
 <style>
@@ -74,9 +68,4 @@
     href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/styles/default.min.css" />
 </svelte:head>
 
-<div class="title">
-  <h1>{post.title}</h1>
-</div>
-<div class="content">
-  {@html mdtext}
-</div>
+<Post {post}/>

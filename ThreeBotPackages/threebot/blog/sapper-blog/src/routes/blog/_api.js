@@ -143,7 +143,7 @@ async function searchLocal(blogName, query) {
 
         for (let post of theposts) {
             if (post.content_with_meta.includes(query)) {
-                let temp = { "type": "posts", "slug": post.slug, "blog": blog }
+                let temp = { "type": "posts", "slug": post.slug, "blog_name": blog }
                 if (!results.includes(temp)) {
                     results.push(temp)
                 }
@@ -153,7 +153,7 @@ async function searchLocal(blogName, query) {
 
         for (let page of thepages) {
             if (page.content_with_meta.includes(query)) {
-                let temp = { "type": "pages", "slug": page.slug, "blog": blog }
+                let temp = { "type": "pages", "slug": page.slug, "blog_name": blog }
 
                 if (!results.includes(temp)) {
                     results.push(temp)

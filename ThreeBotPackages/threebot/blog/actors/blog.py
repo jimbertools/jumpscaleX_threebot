@@ -149,15 +149,13 @@ class blog(j.baseclasses.threebot_actor):
 
             for post in self._list_posts(blog_name):
                 if query in post.content_with_meta:
-                    temp = {"type": "posts", "slug": post.slug, "blog": blog}
+                    temp = {"type": "posts", "slug": post.slug, "blog_name": blog_name}
                     if temp not in results:
                         results.append(temp)
 
             for page in self._list_pages(blog_name):
                 if query in page.content_with_meta:
-                    temp = {"type": "pages", "slug": page.slug, "blog": blog}
+                    temp = {"type": "pages", "slug": page.slug, "blog_name": blog_name}
                     if temp not in results:
                         results.append(temp)
-
-        if results:
-            return j.data.serializers.json.dumps(results)
+        return j.data.serializers.json.dumps(results)

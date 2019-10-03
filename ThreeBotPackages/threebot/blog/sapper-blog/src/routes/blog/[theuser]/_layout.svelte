@@ -23,6 +23,7 @@
   import Sidebar from "../../../components/Sidebar.svelte";
   import Footer from "../../../components/Footer.svelte";
   import Header from "../../../components/Header.svelte";
+  import TagCloud from "../../../components/TagCloud.svelte";
 
   export let segment;
   export let pages = [];
@@ -59,7 +60,9 @@
 
   <div class="row">
     <div class="col-md-3 hidden-xs">
-      <Sidebar {metadata} />
+      <Sidebar {metadata} {tags}/>
+
+
     </div>
 
     <div class="col-md-9">

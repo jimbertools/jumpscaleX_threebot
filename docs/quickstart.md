@@ -21,9 +21,10 @@ class Package(j.baseclasses.threebot_package):
         server = self.openresty
         server.install(reset=False)
         server.configure()
-        website = server.websites.get("pastebin")
+        website = server.get_from_port(80)
         website.ssl = False
-        website.port = 8082
+        website.save()
+
         locations = website.locations.get("pastebin")
 
         website_location = locations.locations_static.new()
@@ -42,7 +43,7 @@ class Package(j.baseclasses.threebot_package):
         # add gedis http server to the rack
         rack.bottle_server_add(name="gedishttp", port=9201, app=app)
 
-        # create location `/actors` to on your website `8084` to forward
+        # create location `/actors` to on your website `80` to forward
         # requests to `9201` where the bottle server is running
         proxy_location = locations.locations_proxy.new()
         proxy_location.name = "gedishttp"
@@ -203,7 +204,7 @@ We need to reach our actors APIs from the frontend using axios or our library of
         # add gedis http server to the rack
         rack.bottle_server_add(name="gedishttp", port=9201, app=app)
 
-        # create location `/actors` to on your website `8084` to forward
+        # create location `/actors` to on your website `80` to forward
         # requests to `9201` where the bottle server is running
         proxy_location = locations.locations_proxy.new()
         proxy_location.name = "gedishttp"

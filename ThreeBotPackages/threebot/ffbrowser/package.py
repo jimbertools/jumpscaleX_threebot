@@ -15,13 +15,13 @@ class Package(j.baseclasses.threebot_package):
         server = self.openresty
         server.install(reset=False)
         server.configure()
-        
+
         website = server.get_from_port(80)
         locations = website.locations.get("locations")
 
         # import pdb; pdb.set_trace()
 
-        #Serve static files
+        # Serve static files
         website_location = locations.locations_static.new()
         website_location.name = "ffbrowser"
         website_location.path_url = "/ffbrowser"

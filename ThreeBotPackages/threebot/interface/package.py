@@ -24,7 +24,6 @@ class Package(j.baseclasses.threebot_package):
         fullpath = j.sal.fs.joinPaths(self.package_root, "html")
         website_location.path_location = fullpath
 
-       
         locations.configure()
         website.configure()
 

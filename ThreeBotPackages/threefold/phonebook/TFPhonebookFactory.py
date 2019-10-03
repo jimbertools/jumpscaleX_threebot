@@ -21,17 +21,18 @@ class TFPhonebookFactory(j.baseclasses.object, j.baseclasses.testtools):
 
         return self.client
 
+    def start(self):
+        self.client = self.client_get()
+
     def test(self, name=""):
         """
         kosmos -p 'j.threebot.package.phonebook.test()'
         """
 
-        self.client = self.client_get()
+        self.start()
 
         j.shell()
 
-        # print(name)
-        # self._test_run(name=name)
+        print(name)
 
-        self._log_info("All TESTS DONE")
         return "OK"
