@@ -4,7 +4,7 @@ firstname** =""
 lastname** = ""
 phone_numbers =  (LO) !contact.phone.1
 addresses =  (LO) !contact.addresses.1
-email = "" (LS)
+email = (LO) !contact.email.1
 picture= "" 
 birthdate= ""
 website=""
@@ -32,3 +32,7 @@ zip_code= ""
 state_province= ""
 country** = ""
 other_detail= ""
+
+@url = contact.email.1
+email = ""
+description = ""
