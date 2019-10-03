@@ -1,8 +1,18 @@
-import config from './config.prod'
-import configLocal from './config.local'
+import localConfig from './config.local'
+import stagingConfig from './config.staging'
+import prodConfig from './config.prod'
 
-var c = config
-console.log(`process.env.NODE_ENV`, process.env.NODE_ENV)
-if (process.env.NODE_ENV !== 'production') c = configLocal
+// console.log(`process.env.NODE_ENV`, process.env.NODE_ENV)
+var config
+if (process.env.NODE_ENV === 'production') {
+  config = prodConfig
+} else if (process.env.NODE_ENV === 'staging') {
+  config = stagingConfig
+} else {
+  config = localConfig
+}
 
-export default (c)
+export default ({
+  ...config,
+  salutations: ['Mr', 'Miss', 'Mme']
+})
