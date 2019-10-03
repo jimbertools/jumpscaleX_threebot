@@ -86,7 +86,7 @@ class contacts(j.baseclasses.threebot_actor):
         ``` 
         """
         contact = self._get_contact(contact_id)
-        # contact.
+        contact.delete()
 
         out = schema_out.new()
         out.success = True

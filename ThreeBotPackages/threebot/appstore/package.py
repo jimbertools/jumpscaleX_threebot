@@ -9,6 +9,7 @@ class Package(j.baseclasses.threebot_package):
         """
         Dependencies
         """
+        self.bcdb.models_add(path=self.package_root + '/models')
          #write 4 apps to database
         bcdb = j.data.bcdb.get('appstore')
         appModel = bcdb.model_get(url='appstore.app')

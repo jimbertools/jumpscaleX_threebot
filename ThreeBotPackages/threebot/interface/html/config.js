@@ -1,4 +1,8 @@
 export default ({
   tfApiUrl: 'https://radar.threefold.io/api/',
-  jsApiUrl: 'http://172.17.0.2:9201/actors/'
+  jsApiUrl: `${window.location}actors/`,
+
+  apiUrl: 'https://ffc-signaling.jimber.org',
+  janus: 'http://ffc-video.jimber.org/janus',
+  janusHTTPS: 'https://ffc-video.jimber.org/janus'
 })
