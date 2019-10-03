@@ -11,7 +11,17 @@
   <ul>
     {#each links as link}
       <li>
-        <a href={link.link}>{link.title}</a>
+        <span>
+
+          {#if link.faclass}
+            <i class={link.faclass}>
+              <a href={link.link}>{link.title}</a>
+            </i>
+          {:else}
+            <a href={link.link}>{link.title}</a>
+            <!-- else content here -->
+          {/if}
+        </span>
       </li>
     {/each}
   </ul>

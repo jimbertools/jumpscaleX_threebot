@@ -1,7 +1,5 @@
 from Jumpscale import j
 from os.path import dirname, abspath, join, splitext
-
-
 import re
 import unicodedata
 
@@ -23,6 +21,14 @@ class BlogLoader(j.baseclasses.object):
 
     def remove_date(self, filename):
         return re.sub(r"(\d+\-)+", "", filename)
+
+    def published_date(self, filename):
+        found = re.findall(r"^(\d+\-\d+\-\d+)", filename)
+        if found:
+            return found[0]
+        else:
+            today = j.data.time.epoch
+            return j.data.time.epoch2pythonDate(today).replace("/", "-")
 
     def slugify(self, string):
         """
@@ -46,7 +52,7 @@ class BlogLoader(j.baseclasses.object):
         self.blog.metadata.blog_description = self.meta.get("blog_description", "blog desc")
         self.blog.metadata.author_name = self.meta["author_name"]
         self.blog.metadata.author_email = self.meta["author_email"]
-        self.blog.metadata.author_image_filepath = j.sal.fs.joinPaths(self.dest, self.meta["author_image_filename"])
+        self.blog.metadata.author_image = self.meta["author_image_filename"]
         self.blog.metadata.posts_dir = self.posts_dir_path
 
         sidebar_links = self.blog.metadata.sidebar_links
@@ -54,13 +60,13 @@ class BlogLoader(j.baseclasses.object):
         sidebar_navlinks = self.blog.metadata.nav_links
 
         for link_obj in self.meta.get("sidebar_links", []):
-            if not link_obj in sidebar_links:
+            if link_obj not in sidebar_links:
                 sidebar_links.append(link_obj)
         for link_obj in self.meta.get("sidebar_social_links", []):
-            if not link_obj in sidebar_social_links:
+            if link_obj not in sidebar_social_links:
                 sidebar_social_links.append(link_obj)
         for link_obj in self.meta.get("nav_links", []):
-            if not link_obj in sidebar_navlinks:
+            if link_obj not in sidebar_navlinks:
                 sidebar_navlinks.append(link_obj)
 
         self.blog.metadata.github_username = self.meta["github_username"]
@@ -99,6 +105,15 @@ class BlogLoader(j.baseclasses.object):
             tags = meta.get("tags", [""])[0]
             tags = [t.strip() for t in tags.split(",")]
             post_obj.tags = tags
+
+            the_author_name = meta.get("author_name", [self.blog.metadata.author_name])[0]
+            the_author_email = meta.get("author_email", [self.blog.metadata.author_email])[0]
+            the_author_image = meta.get("author_image", [self.blog.metadata.author_image])[0]
+
+            post_obj.author_name = the_author_name
+            post_obj.author_email = the_author_email
+            post_obj.author_image = the_author_image
+
             post_obj.save()
             # print("POST INFO: ", post_obj)
 
@@ -175,7 +190,7 @@ class Package(j.baseclasses.threebot_package):
         if metafiles:
             metafile = metafiles[0]
         else:
-            raise j.exceptions.RuntimeError("no metadata.yml file found in the rep.")
+            raise j.exceptions.RuntimeError("no metadata.yml file found in the repo.")
         meta = j.data.serializers.yaml.load(metafile)
 
         found = blog_model.find(name=self.blog_name)

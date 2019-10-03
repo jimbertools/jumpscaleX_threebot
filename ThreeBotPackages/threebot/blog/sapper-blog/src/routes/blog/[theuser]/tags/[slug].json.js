@@ -27,7 +27,7 @@ export async function get(req, res, next) {
             'Content-Type': 'application/json'
         });
         console.log(`result: ${JSON.stringify(lookup.get(slug))}`)
-        res.end(lookup.get(slug));
+        res.end(JSON.stringify(lookup.get(slug)));
     } else {
         res.writeHead(404, {
             'Content-Type': 'application/json'

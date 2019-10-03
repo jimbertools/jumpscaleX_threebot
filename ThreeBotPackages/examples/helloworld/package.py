@@ -2,8 +2,9 @@ from Jumpscale import j
 
 
 class Package(j.baseclasses.threebot_package):
-    def _init(self, *args, **kwargs):
-        self.bcdb = self._package.threebot_server.bcdb_get("helloworld")
+    @property
+    def bcdb(self):
+        return self._package.threebot_server.bcdb_get("helloworld")
 
     def prepare(self):
         """
@@ -11,28 +12,15 @@ class Package(j.baseclasses.threebot_package):
         """
         j.builders.runtimes.python3.pip_package_install("filetype")
 
-    def start(self):
-        self.bcdb.models_add(path=self.package_root + "/models")
-        self.gedis_server.actors_add(path=self.package_root + "/actors")
-
-        server = self.openresty
-        server.install(reset=False)
-        server.configure()
-        website = server.websites.get("helloworld")
+        website = self.openresty.websites.get("helloworld")
         website.ssl = False
         website.port = 8081
         locations = website.locations.get("helloworld")
 
-        # import pdb; pdb.set_trace()
-
         ## START BOTTLE ACTORS ENDPOINT
 
-        rack = j.servers.rack.get()
-        # get gedis http server
-        app = j.servers.gedishttp.get_app()
-
         # add gedis http server to the rack
-        rack.bottle_server_add(name="gedishttp", port=9201, app=app)
+        self.rack_server.bottle_server_add(name="gedishttp", port=9201, app=app)
 
         # create location `/actors` to on your website `8084` to forward
         # requests to `9201` where the bottle server is running
@@ -52,6 +40,9 @@ class Package(j.baseclasses.threebot_package):
 
         locations.configure()
         website.configure()
+
+    def start(self):
+        pass
 
     def stop(self):
         pass

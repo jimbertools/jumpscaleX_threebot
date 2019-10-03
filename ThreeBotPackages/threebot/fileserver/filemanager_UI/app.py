@@ -8,7 +8,7 @@ from io import BytesIO
 import mimetypes
 import os
 import filetype
-
+import hashlib
 from bottle import request, response, Bottle, abort, static_file, template
 
 from Jumpscale import j
@@ -403,7 +403,7 @@ class App(object):
             obj = self.db._file_model.get_by_name(name=path)
 
             response.set_header("X-Renew-Token", "true")
-            response.set_header("Content-Type", obj.content_type)
+            response.set_header("Content-Type", 'application/octet-stream')
 
             if inline:
                 response.set_header("Content-Disposition", "inline")
@@ -498,6 +498,14 @@ class App(object):
         @self.app.route("/files/<path:path>")
         def home3(path):
             return static_file("index.html", root="%s/static" % self.root)
+
+        @self.app.route("/opendocs/file/<path:re:.*>", method="get")
+        def onlyoffice(path):
+            title = j.sal.fs.getBaseName(path)
+            key = hashlib.md5(path.encode('utf-8')).hexdigest()
+            extension = j.sal.fs.getFileExtension(path)
+            return template("%s/static/onlyoffice.html" % self.root,
+                            {'title': title, 'key': key, 'extension': extension})
 
     def __call__(self):
         return self.app

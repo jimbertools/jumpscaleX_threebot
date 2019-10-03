@@ -12,16 +12,17 @@ class FFMainApp(j.baseclasses.object, j.baseclasses.testtools):
         website.ssl = False
 
         website.save()
-        
+
         locations = website.locations.get("locations")
 
         for pkg in ["ffbrowser", "interface", "contacts","appstore"]:
             print("DIIR PATH: ", self._dirpath)
-            package = j.tools.threebot_packages.get(pkg, path=os.path.join(os.path.dirname(self._dirpath), pkg), threebot_server_name=server.name)
+            package = j.tools.threebot_packages.get(
+                pkg, path=os.path.join(os.path.dirname(self._dirpath), pkg), threebot_server_name=server.name
+            )
             package.prepare()
             package.start()
             package.save()
-
 
         rack = j.servers.rack.get()
         app = j.servers.gedishttp.get_app()

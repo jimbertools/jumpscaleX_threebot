@@ -5,19 +5,18 @@ class HelloWorldFactory(j.baseclasses.object, j.baseclasses.testtools):
 
     __jslocation__ = "j.threebot.package.helloworld"
 
-    def install(self):
-        server = j.servers.threebot.default
-        server.save()
-
-        package = j.tools.threebot_packages.get("helloworld", path=self._dirpath, threebot_server_name=server.name)
-        package.prepare()
-        package.save()
-        return "OK"
-
     def start(self):
-        self.install()
-        server = j.servers.threebot.default
-        server.start(web=True, ssl=False)
+        """
+        kosmos 'j.threebot.package.helloworld.start()'
+        :return:
+        """
+        gedis_client = j.servers.threebot.local_start_default(web=True)
+        gedis_client.actors.package_manager.package_add(path=self._dirpath)
 
     def test(self, name=""):
+        """
+        kosmos 'j.threebot.package.helloworld.test()'
+        :return:
+        """
+        # TODO: create a test e.g. call the bottle server app with /hello
         pass

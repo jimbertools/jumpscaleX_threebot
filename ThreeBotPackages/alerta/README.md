@@ -1,19 +1,21 @@
 # Alerta
 
-central monitoring system built using svelte and gedis actors
+Central monitoring system built using sapper and gedis actors (with jumpscale alert handler integration).
 
-![alerta](./alerta.jpg)
+![alerta](./alerta1.png)
+![alerta](./alerta2.png)
 
-## Running 
+## Running
 
 - install bottle module `pip3 install bottle`
 - install frontend dependencies `cd alerta && npm install`
+- build frontend `./build_frontend.sh`
 - execute `kosmos -p 'j.threebot.package.alerta.start()'`
-- server will start at `172.17.0.2:8081`
+- server will start at `172.17.0.2`
 
 ## The package file
 
-see [package.py](package.py) where the following is done:
+Cee [package.py](package.py) where the following is done:
 
 - create openresty server on a port
 - create a location to serve static files (or a proxy).
@@ -23,25 +25,25 @@ see [package.py](package.py) where the following is done:
 
 See [actors](actors), for example we have alerta actor with the following methods:
 
-- `list_alerts` : list all alerts 
+- `list_alerts` : list all alerts
 - `list_alerts_by_env`: get alerts by environment
 - `new_alert`: create new alert in system
 
 
 ```
 JSX> anew = j.clients.gedis(...., port=8901)
-JSX> anew.actors.alerta.list_alerts() 
+JSX> anew.actors.alerta.list_alerts()
 ... a very long list
 JSX> anew.actors.alerta.new_alert(
-   severity=10, 
-   status="new", 
-   environment="ALL", 
-   service="JSX", 
-   resource="xmonader", 
-   event="event 1", 
-   value="n/a", 
-   messageType="error", 
-   text="rafir text") 
+   severity=10,
+   status="new",
+   environment="ALL",
+   service="JSX",
+   resource="xmonader",
+   event="event 1",
+   value="n/a",
+   messageType="error",
+   text="rafir text")
 ## actors.default.alerta.new_alert.16c54214bfcd2a5b61f789be085a1d14
 res                 : True
 ```
