@@ -5,7 +5,6 @@ export default ({
   apiUrl: `https://ffc-signaling.staging.jimber.org`,
   janus: 'https://ffc-video.staging.jimber.org:8089/janus',
   janusHTTPS: 'https://ffc-video.staging.jimber.org:8089/janus',
-  
-  botFrontEnd: 'https://login.staging.jimber.org/',
-  botBackend: 'https://login.staging.jimber.org/'
+  botFrontEnd: 'https://login.threefold.me/',
+  botBackend: 'https://login.threefold.me'
 })
