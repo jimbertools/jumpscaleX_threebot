@@ -505,7 +505,7 @@ class App(object):
             key = hashlib.md5(path.encode('utf-8')).hexdigest()
             extension = j.sal.fs.getFileExtension(path)
             return template("%s/static/onlyoffice.html" % self.root,
-                            {'title': title, 'key': key, 'extension': extension})
+                            {'title': title, 'key': key, 'extension': extension, 'path': path})
 
     def __call__(self):
         return self.app
