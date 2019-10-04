@@ -3,7 +3,7 @@ from Jumpscale import j
 
 class AppStoreFactory(j.baseclasses.object, j.baseclasses.testtools):
 
-    __jslocation__ = "j.threebot.package.appstore2"
+    __jslocation__ = "j.threebot.package.appstore"
 
     def install(self):
         server = j.servers.threebot.default

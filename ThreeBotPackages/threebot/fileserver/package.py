@@ -13,24 +13,31 @@ class Package(j.baseclasses.threebot_package):
         called when the 3bot starts
         :return:
         """
+        import ipdb; ipdb.set_trace()
+        server = self.openresty
+        server.install(reset=False)
+        server.configure()
+        website = server.get_from_port(80)
+        locations = website.locations.get("locations")
+
         # TODO: ADD REVERSE PROXY
 
         # Couldn't import file app.py directly!
         from fileserver.filemanager_UI.app import App
 
         root = os.path.dirname(os.path.abspath(__file__)) + "/filemanager_UI"
-        rack = j.servers.rack.get()
+        #rack = j.servers.rack.get()
         app = App(root=root)()
-        rack.bottle_server_add(name="fileman", port=6999, app=app)
+        self.rack_server.bottle_server_add(name="fileman", port=6999, app=app)
+        
 
-        website = self.openresty.websites.get(f"filemanager")
-        website.ssl = False
-        website.port = 7000
+        #website.ssl = False
+        #website.port = 7000
 
-        locations = website.locations.get("filemanager")
+        #locations = website.locations.get("filemanager")
         proxy_location = locations.locations_proxy.new()
         proxy_location.name = "filemanager"
-        proxy_location.path_url = "/"
+        proxy_location.path_url = "/filemanager"
         proxy_location.ipaddr_dest = "0.0.0.0"
         proxy_location.port_dest = 6999
         proxy_location.scheme = "http"
@@ -44,9 +51,9 @@ class Package(j.baseclasses.threebot_package):
         proxy_location = locations.locations_proxy.new()
         proxy_location.name = "onlyoffice"
         proxy_location.path_url = "/onlyoffice/"
-        proxy_location.ipaddr_dest = "172.19.0.4"
-        proxy_location.port_dest = 80
-        proxy_location.scheme = "http"
+        proxy_location.ipaddr_dest = "office.jimber.org"
+        proxy_location.port_dest = 443
+        proxy_location.scheme = "https"
 
         locations.configure()
         website.configure()
@@ -59,7 +66,7 @@ class Package(j.baseclasses.threebot_package):
         j.builders.runtimes.python3.pip_package_install("filetype")
 
     def start(self):
-        self.start_webdav()
+        #self.start_webdav()
         time.sleep(3)
         self.start_file_ui()
 

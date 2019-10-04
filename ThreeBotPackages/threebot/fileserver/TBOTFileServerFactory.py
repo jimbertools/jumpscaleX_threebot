@@ -21,7 +21,7 @@ class TBOTFileServerFactory(j.baseclasses.object, j.baseclasses.testtools):
         server = j.servers.threebot.default
         server.web = web
         server.ssl = ssl
-        server.start(web=True, ssl=False)
+        #server.start(web=True, ssl=False)
 
     """ def start_webdav(self, background=False, web=True, ssl=False):
         self.install()
