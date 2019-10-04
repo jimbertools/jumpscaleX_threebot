@@ -19,7 +19,8 @@ class Package(j.baseclasses.threebot_package):
                     {"appname" : "Calendar", "installed" : False, "description" : "Standard private calendar.", "image" : "upcoming"},
                     {"appname" : "Wallet", "installed" : False, "description" : "TFT, BTC, GFT, ... Keep them safe, keep them here.", "image" : "upcoming"},
                     {"appname" : "Browser", "installed" : False, "description" : "Private browsing without limits.", "image" : "upcoming"},
-                    {"appname" : "FF Connect", "installed" : False, "description" : "Peer to peer and group video conferencing, straight from the browser.", "image" : "upcoming"}]
+                    {"appname" : "FF Connect", "installed" : False, "description" : "Peer to peer and group video conferencing, straight from the browser.", "image" : "upcoming"},
+                    {"appname" : "Docs", "installed" : False, "description" : "Manage your own private documents.", "image" : "upcoming"}]
 
         appsInDb = appModel.iterate()
 
