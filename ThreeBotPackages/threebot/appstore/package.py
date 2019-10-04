@@ -17,7 +17,7 @@ class Package(j.baseclasses.threebot_package):
         appsList = [{"appname" : "Mail", "installed" : False, "description" : "3bot-to-3bot mail service. Convenience of e-mail meets privacy, no man in the middle.", "image" : "upcoming"},
                     {"appname" : "Contacts", "installed" : False, "description" : "Your personal contacts list, integration with other apps possible.", "image" : "upcoming"},
                     {"appname" : "Calendar", "installed" : False, "description" : "Standard private calendar.", "image" : "upcoming"},
-                    {"appname" : "Wallet", "installed" : False, "description" : "TFT, BTC, GFT, ... Keep them safe, keep them here.", "image" : "upcoming"},
+                    #{"appname" : "Wallet", "installed" : False, "description" : "TFT, BTC, GFT, ... Keep them safe, keep them here.", "image" : "upcoming"},
                     {"appname" : "Browser", "installed" : False, "description" : "Private browsing without limits.", "image" : "upcoming"},
                     {"appname" : "FF Connect", "installed" : False, "description" : "Peer to peer and group video conferencing, straight from the browser.", "image" : "upcoming"},
                     {"appname" : "Docs", "installed" : False, "description" : "Manage your own private documents.", "image" : "upcoming"}]
